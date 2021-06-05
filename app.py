@@ -44,9 +44,9 @@ def update_items_handler(data):
         print("Item already exists!")
         print("Enter new country of origin:")
         obj['country'] = input()
-        print("How many items are in stock now?")
-        obj['price'] = int(input())
         print("What is the new price?")
+        obj['price'] = int(input())
+        print("How many items are in stock now?")
         obj['quantity'] = int(input())
         for item in data:
             if item['name'] == selection:
@@ -57,9 +57,9 @@ def update_items_handler(data):
         obj['name'] = selection
         print("Enter country of origin:")
         obj['country'] = input()
-        print("How many items are in stock?")
-        obj['price'] = int(input())
         print("What is the price?")
+        obj['price'] = int(input())
+        print("How many items are in stock?")
         obj['quantity'] = int(input())
         data.append(obj)
     return data
@@ -88,7 +88,7 @@ def remove_item_handler(data):
 
 def compute_stock_value_handler(data):
     print("Compute stock value selected")
-    total = 1
+    total = 0
     for item in data:
         product = item['price'] * item['quantity']
         total = total + product
