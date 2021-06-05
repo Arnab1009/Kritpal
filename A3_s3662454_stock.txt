@@ -1,0 +1,4 @@
+apple,India, 5,10
+orange,United States, 10,6
+kiwi,New Zealand, 20,12
+banana,India, 8,11
