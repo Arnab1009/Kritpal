@@ -1,0 +1,85 @@
+CREATE DATABASE bank;
+USE bank;
+CREATE TABLE customer
+(
+   custid VARCHAR(6),
+   first_name VARCHAR(30),
+   last_name VARCHAR(30),
+   city VARCHAR(15),
+   occupation VARCHAR(10),
+   mobile_no VARCHAR(10),
+   dob DATE,
+   CONSTRAINT customer_custid_pk PRIMARY KEY(custid)
+);
+CREATE TABLE branch
+(
+   bid VARCHAR(6),
+   bname VARCHAR(30),
+   CONSTRAINT branch_bid_pk PRIMARY KEY(bid)
+);
+CREATE TABLE 	acc
+(
+   accnumber VARCHAR(6),
+    custid VARCHAR(6),
+   bid VARCHAR(6),
+   opening_balance INT(5),
+   accdate DATE,
+   acctype VARCHAR(10),
+   accstatus VARCHAR(10),
+   CONSTRAINT acc_accnumber_pk PRIMARY KEY(accnumber),
+   CONSTRAINT acc_custid_fk FOREIGN KEY(custid) REFERENCES  customer(custid),
+   CONSTRAINT acc_bid_fk FOREIGN KEY(bid) REFERENCES branch(bid)
+);
+CREATE TABLE transdetails
+(
+   transnumber VARCHAR(6),
+   accnumber VARCHAR(6),
+   transdate DATE,
+   transmed VARCHAR(20),
+   transtype VARCHAR(20),
+   transamt INT(5),
+   CONSTRAINT transdetails_transnumber_pk PRIMARY KEY(transnumber),
+   CONSTRAINT accnumber_transdetails_fk FOREIGN KEY(accnumber) REFERENCES acc(accnumber)
+);
+CREATE TABLE loan
+(
+   custid VARCHAR(6),
+   bid VARCHAR(6),
+    loanamt INT(7),
+   CONSTRAINT loan_custid_bid_pk PRIMARY KEY(custid,bid),
+CONSTRAINT loan_custid_fk FOREIGN KEY(custid) REFERENCES customer(custid),
+CONSTRAINT loan_bid_fk FOREIGN KEY(bid) REFERENCES branch(bid)
+);
+
+INSERT INTO customer VALUES (‘C00001’ , ’Mukesh‘ , ’Sharma’ , ’Delhi’ , ’Service’ , ‘7967550912’ , ‘1976-12-06’);
+INSERT INTO customer VALUES (‘C00002’ , ‘Rahul’ , ‘Khanna’ , ‘Delhi’ , ‘Service’ , ‘9876532109’ , ‘1974-10-16’);
+INSERT INTO customer VALUES (‘C00003’ , ‘Parul’ , ‘Rastogi’ , ‘Bengaluru’ , ‘Student’ , ‘9904231856’ , ‘2001-05-18’);
+INSERT INTO customer VALUES (‘C00004’ , ‘Anna’ , ‘Peters’ , ‘Chennai’ ,  ‘Housewife’ , ‘7750302916’ , ‘1972-03-11’);
+INSERT INTO customer VALUES (‘ C00005’ , ‘Shadab’ , ‘Khan’ , ‘Lucknow’ , ‘Doctor’ , ‘8970453200’ , ‘1977-09-07’);
+INSERT INTO customer VALUES (‘C00006’ , ‘Siddarth’ , ‘Mistry’ , ‘Mumbai’ , ‘Teacher’ , ‘9686125085’ , ‘1968-02-27’);
+
+INSERT INTO branch VALUES (‘B00001’ , ‘Firozabad’);
+INSERT INTO branch VALUES (‘B00002’ , ‘Mehrauli’);
+INSERT INTO branch VALUES (‘B00003’ , ‘Whitefield’);
+INSERT INTO branch VALUES (‘B00004’ , ‘Alandur’);
+INSERT INTO branch VALUES (‘B00005’ , ‘Aliganj’);
+INSERT INTO branch VALUES (‘B00006’ , ‘Bandra’);
+INSERT INTO acc VALUES (‘A00001’ , ‘C00001’ , ‘B00001’ ,10000, ‘2012-12-15’ , ‘Saving’ , ‘Active’);
+INSERT INTO acc VALUES (‘A00002’ , ‘C00002’ , ‘B00002’ ,10000, ‘2012-06-12’ , ‘Saving’ , ‘Active’);
+INSERT INTO acc VALUES (‘A00003’ , ‘C00003’ , ‘B00003’ ,10000, ‘2012-05-17’ , ‘Saving’ , ‘Active’);
+INSERT INTO acc VALUES (‘A00004’ , ‘C00004’ , ‘B00004’ ,10000, ‘2010-08-12’ , ‘Saving’ , ‘Suspended’);
+INSERT INTO acc VALUES (‘A00005’ , ‘C00005’ , ‘B00005’ ,10000, ‘2009-11-09’ , ‘Saving’ , ‘Terminated’);
+INSERT INTO acc VALUES (‘A00006’ , ‘C00006’ , ‘B00006’ ,10000, ‘2013-03-21’ , ‘Saving’ , ‘Active’);
+
+INSERT INTO transdetails VALUES (‘T00001’ , ‘A00001’ , ‘2013-01-01’ , ‘Cheque’ , ‘Deposit’ ,2000);
+INSERT INTO transdetails VALUES (‘T00002’ , ‘A00001’ , ‘2013-02-01’ , ‘Cash’ , ‘Withdrawal’ ,1000);
+INSERT INTO transdetails VALUES (‘T00003’ , ‘A00003’ , ‘2013-03-14’ , ‘Cheque’ , ‘Deposit’ ,30000);
+INSERT INTO transdetails VALUES (‘T00004’ , ‘A00001’ , ‘2013-03-22’ , ‘Cash’ , ‘Withdrawal’ ,2000);
+INSERT INTO transdetails VALUES (‘T00005’ , ‘A00006’ , ‘2013-11-13’ , ‘Cash’ , ‘Deposit’ ,15000);
+INSERT INTO transdetails VALUES (‘T00006’ , ‘A00002’ , ‘2013-03-25’ , ‘Cash’ , ‘Withdrawal’ ,9000);
+INSERT INTO transdetails VALUES (‘T00007’ , ‘A00006’ , ‘2014-03-21’ , ‘Cash’ , ‘Deposit’ ,8000);
+INSERT INTO transdetails VALUES (‘T00008’ , ‘A00001’ , ‘2013-01-11’ , ‘Cheque’ , ‘Deposit’ ,7000);
+
+INSERT INTO loan VALUES (‘C00001’ , ‘B00001’ ,200000);
+INSERT INTO loan VALUES (‘C00003’ , ‘B00003’ ,1000000);
+INSERT INTO loan VALUES (‘C00006’ , ‘B00006’ ,300000);
