@@ -22,5 +22,18 @@ def triggerTransation():
  label2.grid(row=1,column=1)
  label1=tk.Label(web2,text="Account I'd: ")
  label1.grid(row=2,column=2,pady=(0,20))
+ ent11 = tk.Entry(web2,width=15)
+ ent11.grid(row=2,column=2,pady=(0,20))
+
+ def func():
+  acc_id = ent11.get()
+  print(acc_id)
+
+ butt4=tk.Button(web2,text="Enter",command=func)
+ butt4.grid(row=5,column=1)
+
+transactBtn=tk.Button(bank,text="TRANSACTION",command=triggerTransaction)
+transactBtn.pack()
+bank.mainloop()
 
 
